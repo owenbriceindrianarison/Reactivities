@@ -1,10 +1,8 @@
-import axios from 'axios';
+import agent from '../../app/api/agent';
 import { Activity } from './model/activity';
 
 export async function fetchActivities(): Promise<Activity[]> {
-  const response = await axios.get<Activity[]>(
-    'http://localhost:5000/api/activities'
-  );
+  const response = await agent.Activities.list();
 
-  return response.data;
+  return response;
 }

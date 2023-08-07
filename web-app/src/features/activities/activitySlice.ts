@@ -6,6 +6,8 @@ export interface ActivityState {
   selectedActivity: Activity | undefined;
   editMode: boolean;
   status: 'idle' | 'loading' | 'failed';
+  createActivityStatus: boolean;
+  deleteActivityStatus: boolean;
 }
 
 const initialState: ActivityState = {
@@ -13,6 +15,8 @@ const initialState: ActivityState = {
   selectedActivity: undefined,
   editMode: false,
   status: 'idle',
+  createActivityStatus: false,
+  deleteActivityStatus: false,
 };
 
 export const activitySlice = createSlice({
@@ -54,6 +58,14 @@ export const activitySlice = createSlice({
     setEditMode: (state, action: PayloadAction<boolean>) => {
       state.editMode = action.payload;
     },
+
+    setCreateActivityStatus: (state, action: PayloadAction<boolean>) => {
+      state.createActivityStatus = action.payload;
+    },
+
+    setDeleteActivityStatus: (state, action: PayloadAction<boolean>) => {
+      state.deleteActivityStatus = action.payload;
+    },
   },
 });
 
@@ -64,6 +76,8 @@ export const {
   openActivityForm,
   closeActivityForm,
   setEditMode,
+  setCreateActivityStatus,
+  setDeleteActivityStatus,
 } = activitySlice.actions;
 
 export default activitySlice.reducer;

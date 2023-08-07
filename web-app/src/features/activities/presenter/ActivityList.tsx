@@ -2,20 +2,32 @@ import { Button, Item, Label, Segment } from 'semantic-ui-react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { setSelectedActivity } from '../activitySlice';
 import { Activity } from '../model/activity';
-import { selectActivities } from '../selectors';
-import { deleteActivityAsync } from '../actions.thunk';
+import { selectActivities, selectDeleteActivityStatus } from '../selectors';
+import { deleteActivityAsync, getActivitiesAsync } from '../actions.thunk';
+import { SyntheticEvent, useEffect, useState } from 'react';
 
 export function ActivityList() {
   const dispatch = useAppDispatch();
   const activities = useAppSelector(selectActivities);
+  const deleteActivityStatus = useAppSelector(selectDeleteActivityStatus);
+
+  const [target, setTarget] = useState('');
 
   function selectActivity(activity: Activity) {
     dispatch(setSelectedActivity({ activity }));
   }
 
-  function deleteActivity(id: string) {
+  function handleActivityDelete(
+    event: SyntheticEvent<HTMLButtonElement>,
+    id: string
+  ) {
+    setTarget(event.currentTarget.name);
     dispatch(deleteActivityAsync(id));
   }
+
+  useEffect(() => {
+    dispatch(getActivitiesAsync());
+  }, [dispatch]);
 
   return (
     <Segment>
@@ -39,10 +51,12 @@ export function ActivityList() {
                   onClick={() => selectActivity(activity)}
                 />
                 <Button
+                  name={activity.id}
+                  loading={deleteActivityStatus && target === activity.id}
                   floated='right'
                   content='Delete'
                   color='red'
-                  onClick={() => deleteActivity(activity.id)}
+                  onClick={(event) => handleActivityDelete(event, activity.id)}
                 />
                 <Label basic content={activity.category} />
               </Item.Extra>
