@@ -1,22 +1,23 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { Activity } from './model/activity';
 
+export type StatusState = 'idle' | 'loading' | 'failed';
 export interface ActivityState {
   items: Activity[];
   selectedActivity: Activity | undefined;
-  editMode: boolean;
-  status: 'idle' | 'loading' | 'failed';
-  createActivityStatus: boolean;
-  deleteActivityStatus: boolean;
+  // editMode: boolean;
+  status: StatusState;
+  creatingStatus: StatusState;
+  deletingStatus: StatusState;
 }
 
 const initialState: ActivityState = {
   items: [],
   selectedActivity: undefined,
-  editMode: false,
+  // editMode: false,
   status: 'idle',
-  createActivityStatus: false,
-  deleteActivityStatus: false,
+  creatingStatus: 'idle',
+  deletingStatus: 'idle',
 };
 
 export const activitySlice = createSlice({
@@ -41,30 +42,16 @@ export const activitySlice = createSlice({
       state.selectedActivity = undefined;
     },
 
-    openActivityForm: (
-      state,
-      action: PayloadAction<{ activity?: Activity }>
-    ) => {
-      if (!action.payload?.activity && state.selectedActivity) {
-        state.selectedActivity = undefined;
-      }
-      state.editMode = true;
+    setStatus: (state, action: PayloadAction<StatusState>) => {
+      state.status = action.payload;
     },
 
-    closeActivityForm: (state) => {
-      state.editMode = false;
+    setCreatingStatus: (state, action: PayloadAction<StatusState>) => {
+      state.creatingStatus = action.payload;
     },
 
-    setEditMode: (state, action: PayloadAction<boolean>) => {
-      state.editMode = action.payload;
-    },
-
-    setCreateActivityStatus: (state, action: PayloadAction<boolean>) => {
-      state.createActivityStatus = action.payload;
-    },
-
-    setDeleteActivityStatus: (state, action: PayloadAction<boolean>) => {
-      state.deleteActivityStatus = action.payload;
+    setDeletingStatus: (state, action: PayloadAction<StatusState>) => {
+      state.deletingStatus = action.payload;
     },
   },
 });
@@ -73,11 +60,9 @@ export const {
   setActivities,
   setSelectedActivity,
   cancelSelectedActivity,
-  openActivityForm,
-  closeActivityForm,
-  setEditMode,
-  setCreateActivityStatus,
-  setDeleteActivityStatus,
+  setCreatingStatus,
+  setDeletingStatus,
+  setStatus,
 } = activitySlice.actions;
 
 export default activitySlice.reducer;

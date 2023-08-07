@@ -1,16 +1,24 @@
-import { Fragment } from 'react';
+import { Outlet, useLocation } from 'react-router';
 import { Container } from 'semantic-ui-react';
 import NavBar from './NavBar';
-import { ActivityDashboard } from '../../features/activities/presenter/ActivityDashboard';
+import { HomePage } from '../../features/home/HomePage';
 
 function App() {
+  const location = useLocation();
+
   return (
-    <Fragment>
-      <NavBar />
-      <Container style={{ marginTop: '7em' }}>
-        <ActivityDashboard />
-      </Container>
-    </Fragment>
+    <>
+      {location.pathname === '/' ? (
+        <HomePage />
+      ) : (
+        <>
+          <NavBar />
+          <Container style={{ marginTop: '7em' }}>
+            <Outlet />
+          </Container>
+        </>
+      )}
+    </>
   );
 }
 

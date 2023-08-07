@@ -1,47 +1,103 @@
 import { v4 as uuid } from 'uuid';
-import agent from '../../app/api/agent';
+
 import { AppThunk } from '../../app/store';
-import { fetchActivities } from './activityAPI';
+import {
+  createActivity,
+  deleteActivity,
+  fetchActivities,
+  getActivity,
+  updateActivity,
+} from './activityAPI';
 import {
   cancelSelectedActivity,
   setActivities,
-  setDeleteActivityStatus,
-  setEditMode,
+  setDeletingStatus,
   setSelectedActivity,
-  setCreateActivityStatus,
+  setStatus,
+  setCreatingStatus,
 } from './activitySlice';
 import { Activity } from './model/activity';
 
 export const getActivitiesAsync = (): AppThunk => async (dispatch) => {
   const activities = await fetchActivities();
-
-  dispatch(setActivities({ activities }));
+  const acitivitiesFormatted: Activity[] = [];
+  activities.forEach((activity) => {
+    activity.date = activity.date.split('T')[0];
+    acitivitiesFormatted.push(activity);
+  });
+  dispatch(setActivities({ activities: acitivitiesFormatted }));
 };
 
+export const getActivityAsync =
+  (id: string): AppThunk<Promise<Activity | undefined>> =>
+  async (dispatch, getState) => {
+    const activities = getState().activity.items;
+    let activity = activities.find((x) => x.id === id);
+    if (activity) {
+      dispatch(setSelectedActivity({ activity }));
+
+      return activity;
+    } else {
+      dispatch(setStatus('loading'));
+
+      try {
+        activity = await getActivity(id);
+        dispatch(setSelectedActivity({ activity }));
+        dispatch(setStatus('idle'));
+
+        return activity;
+      } catch (err) {
+        dispatch(setStatus('failed'));
+        console.log(err);
+      }
+    }
+
+    return undefined;
+  };
+
 export const createOrEditActivityAsync =
-  (activity: Activity): AppThunk =>
+  (activity: Activity): AppThunk<Promise<Activity | undefined>> =>
   async (dispatch, getState) => {
     const activities = getState().activity.items;
 
-    dispatch(setCreateActivityStatus(true));
+    dispatch(setCreatingStatus('loading'));
     if (activity.id) {
-      await agent.Activities.update(activity);
-      dispatch(
-        setActivities({
-          activities: [
-            ...activities.filter((x) => x.id !== activity.id),
-            activity,
-          ],
-        })
-      );
+      try {
+        await updateActivity(activity);
+
+        dispatch(
+          setActivities({
+            activities: [
+              ...activities.filter((x) => x.id !== activity.id),
+              activity,
+            ],
+          })
+        );
+        dispatch(setCreatingStatus('idle'));
+        dispatch(setSelectedActivity({ activity }));
+
+        return activity;
+      } catch (err) {
+        dispatch(setCreatingStatus('failed'));
+        console.log(err);
+      }
     } else {
       activity.id = uuid();
-      await agent.Activities.create(activity);
-      dispatch(setActivities({ activities: [...activities, activity] }));
+
+      try {
+        await createActivity(activity);
+        dispatch(setActivities({ activities: [...activities, activity] }));
+        dispatch(setCreatingStatus('idle'));
+        dispatch(setSelectedActivity({ activity }));
+
+        return activity;
+      } catch (err) {
+        console.log(err);
+        dispatch(setCreatingStatus('failed'));
+      }
     }
-    dispatch(setCreateActivityStatus(false));
-    dispatch(setSelectedActivity({ activity }));
-    dispatch(setEditMode(false));
+
+    return;
   };
 
 export const deleteActivityAsync =
@@ -49,12 +105,21 @@ export const deleteActivityAsync =
   async (dispatch, getState) => {
     const { items: activities, selectedActivity } = getState().activity;
 
-    dispatch(setDeleteActivityStatus(true));
-    await agent.Activities.delete(id);
-    dispatch(setDeleteActivityStatus(false));
-    dispatch(
-      setActivities({ activities: [...activities.filter((x) => x.id !== id)] })
-    );
+    dispatch(setDeletingStatus('loading'));
+
+    try {
+      await deleteActivity(id);
+
+      dispatch(setDeletingStatus('idle'));
+      dispatch(
+        setActivities({
+          activities: [...activities.filter((x) => x.id !== id)],
+        })
+      );
+    } catch (err) {
+      console.log(err);
+      dispatch(setDeletingStatus('failed'));
+    }
 
     if (selectedActivity?.id === id) {
       dispatch(cancelSelectedActivity());

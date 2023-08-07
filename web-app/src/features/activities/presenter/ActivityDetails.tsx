@@ -1,13 +1,24 @@
+import { useEffect } from 'react';
+import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Button, Card, Image } from 'semantic-ui-react';
-import { cancelSelectedActivity, openActivityForm } from '../activitySlice';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { selectActivity } from '../selectors';
+import { selectActivity, selectStatus } from '../selectors';
+import { getActivityAsync } from '../actions.thunk';
+import LoadingComponent from '../../../app/layout/LoadingComponent';
 
 export function ActivityDetails() {
+  const { id } = useParams();
+
   const dispatch = useAppDispatch();
   const activity = useAppSelector(selectActivity);
+  const status = useAppSelector(selectStatus);
 
-  if (!activity) return null;
+  useEffect(() => {
+    dispatch(getActivityAsync(id!));
+  }, [id, dispatch]);
+
+  if (status === 'loading' || !activity) return <LoadingComponent />;
 
   return (
     <Card fluid>
@@ -22,13 +33,15 @@ export function ActivityDetails() {
       <Card.Content extra>
         <Button.Group widths={2}>
           <Button
-            onClick={() => dispatch(openActivityForm({ activity }))}
+            as={Link}
+            to={`/manage/${activity.id}`}
             basic
             color='blue'
             content='Edit'
           />
           <Button
-            onClick={() => dispatch(cancelSelectedActivity())}
+            as={Link}
+            to='/activities'
             basic
             color='grey'
             content='Cancel'

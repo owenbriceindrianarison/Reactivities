@@ -1,7 +1,8 @@
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
+import { RouterProvider } from 'react-router';
 import { store } from './app/store';
-import App from './app/layout/App';
+import { router } from './app/router/Routes';
 import reportWebVitals from './reportWebVitals';
 import 'semantic-ui-css/semantic.min.css';
 import './app/layout/styles.css';
@@ -12,7 +13,7 @@ const root = createRoot(container);
 root.render(
   // <React.StrictMode>
   <Provider store={store}>
-    <App />
+    <RouterProvider router={router} />
   </Provider>
   // </React.StrictMode>
 );

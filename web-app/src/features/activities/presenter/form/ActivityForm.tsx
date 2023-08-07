@@ -1,17 +1,22 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Button, Form, Segment } from 'semantic-ui-react';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
-import { closeActivityForm } from '../../activitySlice';
-import { selectActivity, selectCreateActivityStatus } from '../../selectors';
+import { selectCreatingStatus } from '../../selectors';
 import { Activity } from '../../model/activity';
-import { createOrEditActivityAsync } from '../../actions.thunk';
+import {
+  createOrEditActivityAsync,
+  getActivityAsync,
+} from '../../actions.thunk';
 
 export function ActivityForm() {
-  const dispatch = useAppDispatch();
-  const selectedActivity = useAppSelector(selectActivity);
-  const createActivityStatus = useAppSelector(selectCreateActivityStatus);
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-  const initialState = selectedActivity ?? {
+  const dispatch = useAppDispatch();
+  const creatingStatus = useAppSelector(selectCreatingStatus);
+  const [activity, setActivity] = useState<Activity>({
     id: '',
     title: '',
     category: '',
@@ -19,12 +24,18 @@ export function ActivityForm() {
     date: '',
     city: '',
     venue: '',
-  };
+  });
 
-  const [activity, setActivity] = useState<Activity>(initialState);
+  useEffect(() => {
+    if (id) {
+      dispatch(getActivityAsync(id)).then((activity) => setActivity(activity!));
+    }
+  }, [id, dispatch]);
 
   function handleSubmit() {
-    dispatch(createOrEditActivityAsync(activity));
+    dispatch(createOrEditActivityAsync(activity)).then((activity) =>
+      navigate(`/activities/${activity!.id}`)
+    );
   }
 
   function handleInputChange(
@@ -75,14 +86,15 @@ export function ActivityForm() {
           onChange={handleInputChange}
         />
         <Button
-          loading={createActivityStatus}
+          loading={creatingStatus === 'loading'}
           floated='right'
           positive
           type='submit'
           content='Submit'
         />
         <Button
-          onClick={() => dispatch(closeActivityForm())}
+          as={Link}
+          to='/activities'
           floated='right'
           type='button'
           content='Cancel'

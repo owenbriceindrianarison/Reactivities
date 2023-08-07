@@ -1,21 +1,16 @@
+import { Link } from 'react-router-dom';
 import { Button, Item, Label, Segment } from 'semantic-ui-react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { setSelectedActivity } from '../activitySlice';
-import { Activity } from '../model/activity';
-import { selectActivities, selectDeleteActivityStatus } from '../selectors';
+import { selectActivities, selectDeletingStatus } from '../selectors';
 import { deleteActivityAsync, getActivitiesAsync } from '../actions.thunk';
 import { SyntheticEvent, useEffect, useState } from 'react';
 
 export function ActivityList() {
   const dispatch = useAppDispatch();
   const activities = useAppSelector(selectActivities);
-  const deleteActivityStatus = useAppSelector(selectDeleteActivityStatus);
+  const deletingStatus = useAppSelector(selectDeletingStatus);
 
   const [target, setTarget] = useState('');
-
-  function selectActivity(activity: Activity) {
-    dispatch(setSelectedActivity({ activity }));
-  }
 
   function handleActivityDelete(
     event: SyntheticEvent<HTMLButtonElement>,
@@ -45,14 +40,17 @@ export function ActivityList() {
               </Item.Description>
               <Item.Extra>
                 <Button
+                  as={Link}
+                  to={`/activities/${activity.id}`}
                   floated='right'
                   content='View'
                   color='blue'
-                  onClick={() => selectActivity(activity)}
                 />
                 <Button
                   name={activity.id}
-                  loading={deleteActivityStatus && target === activity.id}
+                  loading={
+                    deletingStatus === 'loading' && target === activity.id
+                  }
                   floated='right'
                   content='Delete'
                   color='red'
