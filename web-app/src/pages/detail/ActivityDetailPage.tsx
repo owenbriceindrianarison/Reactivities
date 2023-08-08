@@ -2,12 +2,15 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Button, Card, Image } from 'semantic-ui-react';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { selectActivity, selectStatus } from '../selectors';
-import { getActivityAsync } from '../actions.thunk';
-import LoadingComponent from '../../../app/layout/LoadingComponent';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import {
+  selectActivity,
+  selectStatus,
+} from '../../features/activities/selectors';
+import { getActivityAsync } from '../../features/activities/actions.thunk';
+import LoadingComponent from '../../components/LoadingComponent';
 
-export function ActivityDetails() {
+export default function ActivityDetailPage() {
   const { id } = useParams();
 
   const dispatch = useAppDispatch();

@@ -1,7 +1,7 @@
 import { Grid } from 'semantic-ui-react';
-import { ActivityList } from './ActivityList';
+import { ActivityList } from '../../features/activities/presenter/ActivityList';
 
-export function ActivityDashboard() {
+export default function ActivityDashboardPage() {
   return (
     <Grid>
       <Grid.Column width={10}>
