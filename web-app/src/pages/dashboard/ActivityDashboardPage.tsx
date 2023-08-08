@@ -1,14 +1,26 @@
+import { useEffect } from 'react';
 import { Grid } from 'semantic-ui-react';
-import { ActivityList } from '../../features/activities/presenter/ActivityList';
+import { ActivityList } from '../../components/activities/list/ActivityList';
+import { ActivityFilters } from '../../components/activities/filters/ActivityFilters';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { getActivitiesAsync } from '../../features/activities/actions.thunk';
+import { selectGroupedActivities } from '../../features/activities/selectors';
 
 export default function ActivityDashboardPage() {
+  const dispatch = useAppDispatch();
+  const groupedActivities = useAppSelector(selectGroupedActivities);
+
+  useEffect(() => {
+    dispatch(getActivitiesAsync());
+  }, [dispatch]);
+
   return (
     <Grid>
       <Grid.Column width={10}>
-        <ActivityList />
+        <ActivityList groupedActivities={groupedActivities} />
       </Grid.Column>
       <Grid.Column width={6}>
-        <h2>Activity Filter</h2>
+        <ActivityFilters />
       </Grid.Column>
     </Grid>
   );

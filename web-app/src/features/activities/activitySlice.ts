@@ -5,7 +5,6 @@ export type StatusState = 'idle' | 'loading' | 'failed';
 export interface ActivityState {
   items: Activity[];
   selectedActivity: Activity | undefined;
-  // editMode: boolean;
   status: StatusState;
   creatingStatus: StatusState;
   deletingStatus: StatusState;
@@ -14,7 +13,6 @@ export interface ActivityState {
 const initialState: ActivityState = {
   items: [],
   selectedActivity: undefined,
-  // editMode: false,
   status: 'idle',
   creatingStatus: 'idle',
   deletingStatus: 'idle',

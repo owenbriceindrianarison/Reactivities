@@ -2,7 +2,7 @@ import { createBrowserRouter, RouteObject } from 'react-router-dom';
 import App from '../App';
 import ActivityDashboardPage from '../pages/dashboard/ActivityDashboardPage';
 import ActivityFormPage from '../pages/create-edit/ActivityFormPage';
-import ActivityDetailPage from '../pages/detail/ActivityDetailPage';
+import ActivityDetailPage from '../pages/details/ActivityDetailsPage';
 
 export const routes: RouteObject[] = [
   {

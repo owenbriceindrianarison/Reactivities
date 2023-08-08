@@ -5,6 +5,7 @@ import { store } from './app/store';
 import { router } from './router/Routes';
 import reportWebVitals from './reportWebVitals';
 import 'semantic-ui-css/semantic.min.css';
+import 'react-calendar/dist/Calendar.css';
 import './styles.css';
 
 const container = document.getElementById('root')!;
