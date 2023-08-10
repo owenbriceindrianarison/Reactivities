@@ -2,13 +2,13 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Button, Form, Segment } from 'semantic-ui-react';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { selectCreatingStatus } from '../../features/activities/selectors';
-import { Activity } from '../../features/activities/model/activity';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { selectCreatingStatus } from '../../store/activities/selectors';
+import { Activity } from '../../store/activities/model/activity';
 import {
   createOrEditActivityAsync,
   getActivityAsync,
-} from '../../features/activities/actions.thunk';
+} from '../../store/activities/actions.thunk';
 
 export default function ActivityFormPage() {
   const { id } = useParams();

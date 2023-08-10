@@ -1,4 +1,4 @@
-import { RootState } from '../../app/store';
+import { RootState } from '../store';
 import { Activity } from './model/activity';
 
 export const selectActivities = (state: RootState) =>

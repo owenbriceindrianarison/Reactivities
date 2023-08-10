@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Button, Icon, Item, Segment } from 'semantic-ui-react';
-import { Activity } from '../../../features/activities/model/activity';
+import { Activity } from '../../../store/activities/model/activity';
 
 interface Props {
   activity: Activity;

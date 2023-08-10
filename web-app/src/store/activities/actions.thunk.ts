@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 
-import { AppThunk } from '../../app/store';
+import { AppThunk } from '../store';
 import {
   createActivity,
   deleteActivity,

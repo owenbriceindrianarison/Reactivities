@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import { Grid } from 'semantic-ui-react';
 import { ActivityList } from '../../components/activities/list/ActivityList';
 import { ActivityFilters } from '../../components/activities/filters/ActivityFilters';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { getActivitiesAsync } from '../../features/activities/actions.thunk';
-import { selectGroupedActivities } from '../../features/activities/selectors';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { getActivitiesAsync } from '../../store/activities/actions.thunk';
+import { selectGroupedActivities } from '../../store/activities/selectors';
 
 export default function ActivityDashboardPage() {
   const dispatch = useAppDispatch();

@@ -1,12 +1,9 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Grid } from 'semantic-ui-react';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import {
-  selectActivity,
-  selectStatus,
-} from '../../features/activities/selectors';
-import { getActivityAsync } from '../../features/activities/actions.thunk';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { selectActivity, selectStatus } from '../../store/activities/selectors';
+import { getActivityAsync } from '../../store/activities/actions.thunk';
 import LoadingComponent from '../../components/LoadingComponent';
 import { ActivityDetailedSidebar } from '../../components/activities/details/ActivityDetailedSidebar';
 import { ActivityDetailedHeader } from '../../components/activities/details/ActivityDetailedHeader';

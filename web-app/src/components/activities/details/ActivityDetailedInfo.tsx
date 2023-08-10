@@ -1,5 +1,5 @@
 import { Segment, Grid, Icon } from 'semantic-ui-react';
-import { Activity } from '../../../features/activities/model/activity';
+import { Activity } from '../../../store/activities/model/activity';
 
 interface Props {
   activity: Activity;

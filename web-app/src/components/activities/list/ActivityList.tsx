@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { Header } from 'semantic-ui-react';
 import { ActivityListItem } from './ActivityListItem';
-import { Activity } from '../../../features/activities/model/activity';
+import { Activity } from '../../../store/activities/model/activity';
 
 interface Props {
   groupedActivities: [string, Activity[]][];
