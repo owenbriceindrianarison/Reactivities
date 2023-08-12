@@ -1,8 +1,10 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import activityReducer from './activities/activitySlice';
+import commonSlice from './common/commonSlice';
 
 export const store = configureStore({
   reducer: {
+    common: commonSlice,
     activity: activityReducer,
   },
 });
