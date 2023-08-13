@@ -22,7 +22,7 @@ export const getActivitiesAsync = (): AppThunk => async (dispatch) => {
   const activities = await fetchActivities();
   const acitivitiesFormatted: Activity[] = [];
   activities.forEach((activity) => {
-    activity.date = activity.date.split('T')[0];
+    activity.date = new Date(activity.date!);
     acitivitiesFormatted.push(activity);
   });
   dispatch(setActivities({ activities: acitivitiesFormatted }));

@@ -1,9 +1,10 @@
+import { format } from 'date-fns';
 import { RootState } from '../store';
 import { Activity } from './model/activity';
 
 export const selectActivities = (state: RootState) =>
   Array.from(state.activity.items).sort(
-    (a, b) => Date.parse(a.date) - Date.parse(b.date)
+    (a, b) => a.date!.getTime() - b.date!.getTime()
   );
 
 export const selectActivity = (state: RootState) =>
@@ -19,12 +20,12 @@ export const selectStatus = (state: RootState) => state.activity.status;
 
 export const selectGroupedActivities = (state: RootState) => {
   const activitiesByDate = Array.from(state.activity.items).sort(
-    (a, b) => Date.parse(a.date) - Date.parse(b.date)
+    (a, b) => a.date!.getTime() - b.date!.getTime()
   );
 
   return Object.entries(
     activitiesByDate.reduce((activities, activity) => {
-      const date = activity.date;
+      const date = format(activity.date!, 'dd MMM yyyy');
       activities[date] = activities[date]
         ? [...activities[date], activity]
         : [activity];

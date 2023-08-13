@@ -59,6 +59,7 @@ Start the server
 - API : Handling API Error responses
 - API : Handling exceptions
 - Web : Axios interceptor to handle API error responses
+- Web : Form with Formik/Yup & Reusable form input
 
 ### Feature to do
 

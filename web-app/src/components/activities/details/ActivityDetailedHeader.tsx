@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Button, Header, Item, Segment, Image } from 'semantic-ui-react';
+import { format } from 'date-fns';
 import { Activity } from '../../../store/activities/model/activity';
 
 const activityImageStyle = {
@@ -37,7 +38,7 @@ export function ActivityDetailedHeader({ activity }: Props) {
                   content={activity.title}
                   style={{ color: 'white' }}
                 />
-                <p>{activity.date}</p>
+                <p>{format(activity.date!, 'dd MMM yyyy h:mm aa')}</p>
                 <p>
                   Hosted by <strong>Bob</strong>
                 </p>

@@ -4,8 +4,9 @@ import { router } from '../../router/Routes';
 import { Activity } from '../../store/activities/model/activity';
 import { setServerError } from '../../store/common/commonSlice';
 import { store } from '../../store/store';
+import { BASE_URL } from '../../utils/constants';
 
-axios.defaults.baseURL = 'http://localhost:5000/api';
+axios.defaults.baseURL = BASE_URL;
 
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
