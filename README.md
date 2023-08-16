@@ -60,10 +60,18 @@ Start the server
 - API : Handling exceptions
 - Web : Axios interceptor to handle API error responses
 - Web : Form with Formik/Yup & Reusable form input
+- API : Identity
+  - Adding a user entity
+  - Adding an IdentityDbContext
+  - Configuring Identity in the startp class
+  - Adding Account controller
+  - Creating a Token service
+  - Creating an auth policy
+  - Registering & Login
+  - Getting Current User
 
 ### Feature to do
 
-- API : Identity
 - Web : Registration & Login
 - Image Upload
 - SignalR

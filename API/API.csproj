@@ -14,6 +14,8 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.32.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.10" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,9 +25,13 @@
   <ItemGroup>
     <None Remove="Extensions\" />
     <None Remove="Middleware\" />
+    <None Remove="DTOs\" />
+    <None Remove="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Extensions\" />
     <Folder Include="Middleware\" />
+    <Folder Include="DTOs\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 </Project>
