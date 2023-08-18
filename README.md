@@ -69,10 +69,10 @@ Start the server
   - Creating an auth policy
   - Registering & Login
   - Getting Current User
+- Web : Registration & Login & Axios Interceptor
 
 ### Feature to do
 
-- Web : Registration & Login
 - Image Upload
 - SignalR
 - Followers

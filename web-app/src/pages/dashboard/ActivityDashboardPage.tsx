@@ -3,8 +3,8 @@ import { Grid } from 'semantic-ui-react';
 import { ActivityList } from '../../components/activities/list/ActivityList';
 import { ActivityFilters } from '../../components/activities/filters/ActivityFilters';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { getActivitiesAsync } from '../../store/activities/actions.thunk';
-import { selectGroupedActivities } from '../../store/activities/selectors';
+import { getActivitiesAsync } from '../../store/activities/activityActions.thunk';
+import { selectGroupedActivities } from '../../store/activities/activitySelectors';
 
 export default function ActivityDashboardPage() {
   const dispatch = useAppDispatch();

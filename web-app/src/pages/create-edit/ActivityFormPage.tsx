@@ -5,12 +5,12 @@ import { Button, Header, Segment } from 'semantic-ui-react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { selectCreatingStatus } from '../../store/activities/selectors';
+import { selectCreatingStatus } from '../../store/activities/activitySelectors';
 import { Activity } from '../../store/activities/model/activity';
 import {
   createOrEditActivityAsync,
   getActivityAsync,
-} from '../../store/activities/actions.thunk';
+} from '../../store/activities/activityActions.thunk';
 import { MyTextInput } from '../../components/form/MyTextInput';
 import { MyTextArea } from '../../components/form/MyTextArea';
 import { MySelectInput } from '../../components/form/MySelectInput';

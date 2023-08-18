@@ -1,5 +1,5 @@
 import { Container, Header, Segment } from 'semantic-ui-react';
-import { selectServerError } from '../../store/common/selectors';
+import { selectServerError } from '../../store/common/commonSelectors';
 import { useAppSelector } from '../../store/hooks';
 
 export function ServerError() {

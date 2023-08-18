@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router';
-import { store } from './store/store';
+import { persistor, store } from './store/store';
 import { router } from './router/Routes';
 import reportWebVitals from './reportWebVitals';
 
@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import 'react-datepicker/dist/react-datepicker.min.css';
 
 import './styles.css';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -18,7 +19,9 @@ const root = createRoot(container);
 root.render(
   // <React.StrictMode>
   <Provider store={store}>
-    <RouterProvider router={router} />
+    <PersistGate loading={null} persistor={persistor}>
+      <RouterProvider router={router} />
+    </PersistGate>
   </Provider>
   // </React.StrictMode>
 );

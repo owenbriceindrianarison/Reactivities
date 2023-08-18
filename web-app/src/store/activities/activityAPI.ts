@@ -1,26 +1,48 @@
 import agent from '../../app/api/agent';
 import { Activity } from './model/activity';
 
-export async function fetchActivities(): Promise<Activity[]> {
-  const response = await agent.Activities.list();
-
-  return response;
+export async function fetchActivitiesRequest(): Promise<
+  Activity[] | undefined
+> {
+  try {
+    return await agent.Activities.list();
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-export async function getActivity(id: string): Promise<Activity> {
-  const response = await agent.Activities.details(id);
+export async function getActivityRequest(
+  id: string
+): Promise<Activity | undefined> {
+  try {
+    const response = await agent.Activities.details(id);
 
-  return response;
+    return response;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-export async function createActivity(activity: Activity) {
-  await agent.Activities.create(activity);
+export async function createActivityRequest(activity: Activity) {
+  try {
+    await agent.Activities.create(activity);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-export async function updateActivity(activity: Activity) {
-  await agent.Activities.update(activity);
+export async function updateActivityRequest(activity: Activity) {
+  try {
+    await agent.Activities.update(activity);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-export async function deleteActivity(id: string) {
-  await agent.Activities.delete(id);
+export async function deleteActivityRequest(id: string) {
+  try {
+    await agent.Activities.delete(id);
+  } catch (err) {
+    console.log(err);
+  }
 }
