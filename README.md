@@ -70,6 +70,7 @@ Start the server
   - Registering & Login
   - Getting Current User
 - Web : Registration & Login & Axios Interceptor
+- API : EF Relationship - Loading Related entities - AutoMapper queryable extensions - Adding an infrastructure project
 
 ### Feature to do
 
