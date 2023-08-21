@@ -33,18 +33,17 @@ Go to the project directory
 Install dependencies
 
 ```bash
-  dotnet restore
-  cd web-app
-  npm install
+  cd server && dotnet restore
+  cd .. && cd web && npm install
 ```
 
 Start the server
 
 ```bash
-  cd API
+  cd server/API
   dotnet run
 
-  cd web-app
+  cd web
   npm run start
 ```
 

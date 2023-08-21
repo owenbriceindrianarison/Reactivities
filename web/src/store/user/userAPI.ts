@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios';
 import agent from '../../app/api/agent';
 import { User, UserFormValues } from './model/user';
 
