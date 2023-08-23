@@ -7,6 +7,7 @@ import {
   fetchActivitiesRequest,
   getActivityRequest,
   updateActivityRequest,
+  updateAttendeeRequest,
 } from './activityAPI';
 import {
   cancelSelectedActivity,
@@ -15,23 +16,36 @@ import {
   setSelectedActivity,
   setStatus,
   setCreatingStatus,
+  updateAttendee,
 } from './activitySlice';
-import { Activity } from './model/activity';
+import { Activity, ActivityFormValues } from './model/activity';
+import { Profile } from './model/profile';
 
-export const getActivitiesAsync = (): AppThunk => async (dispatch) => {
-  const acitivitiesFormatted: Activity[] = [];
+export const getActivitiesAsync =
+  (): AppThunk => async (dispatch, getState) => {
+    const user = getState().userSlice.user;
+    const acitivitiesFormatted: Activity[] = [];
 
-  const activities = await fetchActivitiesRequest();
+    const activities = await fetchActivitiesRequest();
 
-  if (activities && activities.length > 0) {
-    activities.forEach((activity) => {
-      activity.date = new Date(activity.date!);
-      acitivitiesFormatted.push(activity);
-    });
-  }
+    if (activities && activities.length > 0) {
+      activities.forEach((activity) => {
+        if (user) {
+          activity.isGoing = activity.attendees!.some(
+            (a) => a.username === user.username
+          );
+          activity.isHost = activity.hostUsername === user.username;
+          activity.host = activity.attendees?.find(
+            (x) => x.username === activity.hostUsername
+          );
+        }
+        activity.date = new Date(activity.date!);
+        acitivitiesFormatted.push(activity);
+      });
+    }
 
-  dispatch(setActivities({ activities: acitivitiesFormatted }));
-};
+    dispatch(setActivities({ activities: acitivitiesFormatted }));
+  };
 
 export const getActivityAsync =
   (id: string): AppThunk<Promise<Activity | undefined>> =>
@@ -62,36 +76,40 @@ export const getActivityAsync =
   };
 
 export const createOrEditActivityAsync =
-  (activity: Activity): AppThunk<Promise<Activity | undefined>> =>
+  (activity: ActivityFormValues): AppThunk<Promise<Activity | undefined>> =>
   async (dispatch, getState) => {
+    const user = getState().userSlice.user;
     const activities = getState().activitySlice.items;
+    const attendee = new Profile(user!);
 
-    dispatch(setCreatingStatus('loading'));
     if (activity.id) {
       await updateActivityRequest(activity);
-
+      let activityUpdated = (await getActivityRequest(activity.id)) as Activity;
+      activityUpdated!.date = new Date(activityUpdated!.date!);
       dispatch(
         setActivities({
           activities: [
             ...activities.filter((x) => x.id !== activity.id),
-            activity,
+            activityUpdated as Activity,
           ],
         })
       );
-      dispatch(setCreatingStatus('idle'));
-      dispatch(setSelectedActivity({ activity }));
+      dispatch(setSelectedActivity({ activity: activityUpdated! }));
 
-      return activity;
+      return activityUpdated;
     }
 
     activity.id = uuid();
 
     await createActivityRequest(activity);
-    dispatch(setActivities({ activities: [...activities, activity] }));
-    dispatch(setCreatingStatus('idle'));
-    dispatch(setSelectedActivity({ activity }));
+    const newActivity = new Activity(activity);
+    newActivity.hostUsername = user!.username;
+    newActivity.attendees = [attendee];
 
-    return activity;
+    dispatch(setActivities({ activities: [...activities, newActivity] }));
+    dispatch(setSelectedActivity({ activity: newActivity }));
+
+    return newActivity;
   };
 
 export const deleteActivityAsync =
@@ -113,4 +131,45 @@ export const deleteActivityAsync =
     if (selectedActivity?.id === id) {
       dispatch(cancelSelectedActivity());
     }
+  };
+
+export const updateAttendeeAsync =
+  (): AppThunk => async (dispatch, getState) => {
+    const selectedActivity = getState().activitySlice.selectedActivity;
+    const user = getState().userSlice.user;
+    const activities = getState().activitySlice.items;
+
+    console.log({ selectedActivity });
+    try {
+      await updateAttendeeRequest(selectedActivity!.id);
+
+      dispatch(
+        updateAttendee({
+          user: user!,
+        })
+      );
+    } catch (err) {
+      console.log(err);
+    } finally {
+    }
+  };
+
+export const cancelActivityToggleAsync =
+  (): AppThunk => async (dispatch, getState) => {
+    const { items: activities, selectedActivity: activity } =
+      getState().activitySlice;
+    await updateAttendeeRequest(activity!.id);
+    const newActivity = {
+      ...activity,
+      isCancelled: !activity!.isCancelled,
+    } as Activity;
+    dispatch(setSelectedActivity({ activity: newActivity }));
+    dispatch(
+      setActivities({
+        activities: [
+          ...activities.filter((x) => x.id !== newActivity.id),
+          newActivity,
+        ],
+      })
+    );
   };

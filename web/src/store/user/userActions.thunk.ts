@@ -1,7 +1,11 @@
 import { AppThunk } from '../store';
 import { UserFormValues } from './model/user';
-import { loginRequest, registerRequest } from './userAPI';
-import { login } from './userSlice';
+import {
+  getCurrentUserRequest,
+  loginRequest,
+  registerRequest,
+} from './userAPI';
+import { login, logout } from './userSlice';
 import { User as UserModel } from './model/user';
 import { close } from '../modal/modalSlice';
 
@@ -28,3 +32,14 @@ export const registerUserAsync =
 
     return user;
   };
+
+export const getCurrentUserAsync = (): AppThunk => async (dispatch) => {
+  const user = await getCurrentUserRequest();
+  if (user) {
+    dispatch(login(user));
+
+    return;
+  }
+
+  dispatch(logout());
+};

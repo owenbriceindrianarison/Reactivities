@@ -1,5 +1,4 @@
-﻿using System;
-namespace Domain
+﻿namespace Domain
 {
 	public class ActivityAttendee
 	{

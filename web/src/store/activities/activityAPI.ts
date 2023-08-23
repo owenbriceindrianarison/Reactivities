@@ -1,5 +1,5 @@
 import agent from '../../app/api/agent';
-import { Activity } from './model/activity';
+import { Activity, ActivityFormValues } from './model/activity';
 
 export async function fetchActivitiesRequest(): Promise<
   Activity[] | undefined
@@ -23,7 +23,7 @@ export async function getActivityRequest(
   }
 }
 
-export async function createActivityRequest(activity: Activity) {
+export async function createActivityRequest(activity: ActivityFormValues) {
   try {
     await agent.Activities.create(activity);
   } catch (err) {
@@ -31,7 +31,7 @@ export async function createActivityRequest(activity: Activity) {
   }
 }
 
-export async function updateActivityRequest(activity: Activity) {
+export async function updateActivityRequest(activity: ActivityFormValues) {
   try {
     await agent.Activities.update(activity);
   } catch (err) {
@@ -42,6 +42,14 @@ export async function updateActivityRequest(activity: Activity) {
 export async function deleteActivityRequest(id: string) {
   try {
     await agent.Activities.delete(id);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function updateAttendeeRequest(id: string) {
+  try {
+    await agent.Activities.attend(id);
   } catch (err) {
     console.log(err);
   }

@@ -27,6 +27,11 @@ export const userSlice = createSlice({
       state.token = null;
       router.navigate('/');
     },
+
+    setUser: (state, action: PayloadAction<User>) => {
+      state.user = action.payload;
+      state.token = action.payload.token;
+    },
   },
 });
 

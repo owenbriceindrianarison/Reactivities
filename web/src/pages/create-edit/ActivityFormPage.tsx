@@ -5,8 +5,10 @@ import { Button, Header, Segment } from 'semantic-ui-react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { selectCreatingStatus } from '../../store/activities/activitySelectors';
-import { Activity } from '../../store/activities/model/activity';
+import {
+  Activity,
+  ActivityFormValues,
+} from '../../store/activities/model/activity';
 import {
   createOrEditActivityAsync,
   getActivityAsync,
@@ -22,16 +24,9 @@ export default function ActivityFormPage() {
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
-  const creatingStatus = useAppSelector(selectCreatingStatus);
-  const [activity, setActivity] = useState<Activity>({
-    id: '',
-    title: '',
-    category: '',
-    description: '',
-    date: null,
-    city: '',
-    venue: '',
-  });
+  const [activity, setActivity] = useState<ActivityFormValues>(
+    new ActivityFormValues()
+  );
 
   const validationSchema = Yup.object({
     title: Yup.string().required('The activity title is required'),
@@ -44,11 +39,13 @@ export default function ActivityFormPage() {
 
   useEffect(() => {
     if (id) {
-      dispatch(getActivityAsync(id)).then((activity) => setActivity(activity!));
+      dispatch(getActivityAsync(id)).then((activity) =>
+        setActivity(new ActivityFormValues(activity!))
+      );
     }
   }, [id, dispatch]);
 
-  function handleFormSubmit(activity: Activity) {
+  function handleFormSubmit(activity: ActivityFormValues) {
     dispatch(createOrEditActivityAsync(activity)).then((activity) =>
       navigate(`/activities/${activity!.id}`)
     );
@@ -91,7 +88,7 @@ export default function ActivityFormPage() {
             <MyTextInput placeholder='Venue' name='venue' />
             <Button
               disabled={isSubmitting || !dirty || !isValid}
-              loading={creatingStatus === 'loading'}
+              loading={isSubmitting}
               floated='right'
               positive
               type='submit'

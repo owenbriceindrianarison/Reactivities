@@ -4,9 +4,17 @@ import NavBar from './components/NavBar';
 import HomePage from './pages/home/HomePage';
 import { ToastContainer } from 'react-toastify';
 import { ModalContainer } from './components/ModalContainer';
+import { useAppDispatch } from './store/hooks';
+import { useEffect } from 'react';
+import { getCurrentUserAsync } from './store/user/userActions.thunk';
 
 function App() {
   const location = useLocation();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getCurrentUserAsync());
+  }, []);
 
   return (
     <>

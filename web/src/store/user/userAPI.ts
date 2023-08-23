@@ -19,3 +19,11 @@ export async function registerRequest(user: UserFormValues): Promise<User> {
     throw err;
   }
 }
+
+export async function getCurrentUserRequest(): Promise<User | undefined> {
+  try {
+    return await agent.Account.current();
+  } catch (err) {
+    console.log(err);
+  }
+}
