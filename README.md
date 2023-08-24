@@ -71,10 +71,14 @@ Start the server
 - Web : Registration & Login & Axios Interceptor
 - API : EF Relationship - Loading Related entities - AutoMapper queryable extensions - Adding an infrastructure project
 - Web : Attendance
+- API : Image Upload
+  - Photo storage option
+  - Adding photo upload service
+  - Using the Cloudinary API
 
 ### Feature to do
 
-- Image Upload
-- SignalR
+- Client Image Upload
+- SignalR (real time)
 - Followers
 - Paging, Sorting, Filtering

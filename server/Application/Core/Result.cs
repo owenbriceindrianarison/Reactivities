@@ -1,5 +1,4 @@
-﻿using System;
-namespace Application.Core
+﻿namespace Application.Core
 {
 	public class Result<T>
 	{

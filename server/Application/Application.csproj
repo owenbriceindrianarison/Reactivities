@@ -13,9 +13,11 @@
 
   <ItemGroup>
     <None Remove="Interfaces\" />
+    <None Remove="Photos\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
+    <Folder Include="Photos\" />
   </ItemGroup>
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
