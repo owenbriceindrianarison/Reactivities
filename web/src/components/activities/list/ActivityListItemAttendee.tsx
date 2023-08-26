@@ -1,5 +1,5 @@
 import { Image, List, Popup } from 'semantic-ui-react';
-import { Profile } from '../../../store/activities/model/profile';
+import { Profile } from '../../../store/profile/model/profile';
 import { Link } from 'react-router-dom';
 import { ProfileCard } from '../../profiles/ProfileCard';
 

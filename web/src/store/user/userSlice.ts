@@ -32,9 +32,13 @@ export const userSlice = createSlice({
       state.user = action.payload;
       state.token = action.payload.token;
     },
+
+    setImage: (state, action: PayloadAction<{ imageUrl: string }>) => {
+      if (state.user) state.user.image = action.payload.imageUrl;
+    },
   },
 });
 
-export const { login, logout } = userSlice.actions;
+export const { login, logout, setUser, setImage } = userSlice.actions;
 
 export default userSlice.reducer;

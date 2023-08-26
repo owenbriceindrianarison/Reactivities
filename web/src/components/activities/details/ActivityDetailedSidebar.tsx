@@ -1,6 +1,5 @@
 import { Segment, List, Label, Item, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { Profile } from '../../../store/activities/model/profile';
 import { Activity } from '../../../store/activities/model/activity';
 
 interface Props {
@@ -22,7 +21,7 @@ export function ActivityDetailedSidebar({
         inverted
         color='teal'
       >
-        {attendees.length} {attendees.length === 1 ? 'person' : 'peopole'}
+        {attendees.length} {attendees.length === 1 ? 'person' : 'people'}
       </Segment>
       <Segment attached>
         <List relaxed divided>

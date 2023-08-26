@@ -9,6 +9,7 @@ import { setServerError } from '../../store/common/commonSlice';
 import { store } from '../../store/store';
 import { BASE_URL } from '../../utils/constants';
 import { User, UserFormValues } from '../../store/user/model/user';
+import { Profile as IProfile, Photo } from '../../store/profile/model/profile';
 
 axios.defaults.baseURL = BASE_URL;
 
@@ -90,9 +91,24 @@ const Account = {
     requests.post<User>('/account/register', user),
 };
 
+const Profile = {
+  get: (username: string) => requests.get<IProfile>(`/profiles/${username}`),
+  uploadPhoto: (file: Blob) => {
+    let formData = new FormData();
+    formData.append('File', file);
+
+    return axios.post<Photo>('/photos', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
+  setMainPhoto: (id: string) => requests.post(`/photos/${id}/setMain`, {}),
+  deletePhoto: (id: string) => requests.del(`/photos/${id}`),
+};
+
 const agent = {
   Activities,
   Account,
+  Profile,
 };
 
 export default agent;

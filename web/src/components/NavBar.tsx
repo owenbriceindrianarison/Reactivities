@@ -15,7 +15,7 @@ export default function NavBar() {
         Reactivities
       </Menu.Item>
       <Menu.Item as={NavLink} to='/activities' name='Activities' />
-      <Menu.Item as={NavLink} to='/errors' name='TestErrors' />
+      {/* <Menu.Item as={NavLink} to='/errors' name='TestErrors' /> */}
       <Menu.Item>
         <Button
           as={NavLink}
@@ -30,7 +30,7 @@ export default function NavBar() {
           <Dropdown.Menu>
             <Dropdown.Item
               as={Link}
-              to={`/profile/${user?.username}`}
+              to={`/profiles/${user?.username}`}
               text='My profile'
             />
             <Dropdown.Item

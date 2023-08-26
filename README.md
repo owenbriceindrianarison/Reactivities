@@ -75,10 +75,16 @@ Start the server
   - Photo storage option
   - Adding photo upload service
   - Using the Cloudinary API
+- Web : Pofile Page
+  - User photos
+  - Photo upload widget
+  - React dropzone
+  - React Cropper
+  - Main photo
+  - Delete Photos
 
 ### Feature to do
 
-- Client Image Upload
 - SignalR (real time)
 - Followers
 - Paging, Sorting, Filtering

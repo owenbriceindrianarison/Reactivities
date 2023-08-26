@@ -1,5 +1,5 @@
 import { Card, Icon, Image } from 'semantic-ui-react';
-import { Profile } from '../../store/activities/model/profile';
+import { Profile } from '../../store/profile/model/profile';
 import { Link } from 'react-router-dom';
 
 interface Props {

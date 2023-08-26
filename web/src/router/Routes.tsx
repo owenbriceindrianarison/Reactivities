@@ -3,9 +3,10 @@ import App from '../App';
 import ActivityDashboardPage from '../pages/dashboard/ActivityDashboardPage';
 import ActivityFormPage from '../pages/create-edit/ActivityFormPage';
 import ActivityDetailPage from '../pages/details/ActivityDetailsPage';
-import { TestErrors } from '../components/errors/TestErrors';
+// import { TestErrors } from '../components/errors/TestErrors';
 import { NotFound } from '../components/errors/NotFound';
 import { ServerError } from '../components/errors/ServerError';
+import ProfilePage from '../pages/profile/ProfilePage';
 
 export const routes: RouteObject[] = [
   {
@@ -29,9 +30,13 @@ export const routes: RouteObject[] = [
         element: <ActivityFormPage key='manage' />,
       },
       {
-        path: 'errors',
-        element: <TestErrors />,
+        path: 'profiles/:username',
+        element: <ProfilePage />,
       },
+      // {
+      //   path: 'errors',
+      //   element: <TestErrors />,
+      // },
       {
         path: 'not-found',
         element: <NotFound />,

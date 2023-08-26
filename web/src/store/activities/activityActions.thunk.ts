@@ -15,11 +15,10 @@ import {
   setDeletingStatus,
   setSelectedActivity,
   setStatus,
-  setCreatingStatus,
   updateAttendee,
 } from './activitySlice';
 import { Activity, ActivityFormValues } from './model/activity';
-import { Profile } from './model/profile';
+import { Profile } from '../profile/model/profile';
 
 export const getActivitiesAsync =
   (): AppThunk => async (dispatch, getState) => {
@@ -137,7 +136,6 @@ export const updateAttendeeAsync =
   (): AppThunk => async (dispatch, getState) => {
     const selectedActivity = getState().activitySlice.selectedActivity;
     const user = getState().userSlice.user;
-    const activities = getState().activitySlice.items;
 
     console.log({ selectedActivity });
     try {

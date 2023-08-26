@@ -4,11 +4,8 @@ import { Link } from 'react-router-dom';
 import { Button, Header, Segment } from 'semantic-ui-react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import {
-  Activity,
-  ActivityFormValues,
-} from '../../store/activities/model/activity';
+import { useAppDispatch } from '../../store/hooks';
+import { ActivityFormValues } from '../../store/activities/model/activity';
 import {
   createOrEditActivityAsync,
   getActivityAsync,

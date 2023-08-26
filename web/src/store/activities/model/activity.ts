@@ -1,5 +1,4 @@
-import { act } from 'react-dom/test-utils';
-import { Profile } from './profile';
+import { Profile } from '../../profile/model/profile';
 
 export interface Activity {
   id: string;

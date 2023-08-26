@@ -10,6 +10,7 @@ import activityReducer from './activities/activitySlice';
 import commonReducer from './common/commonSlice';
 import userReducer from './user/userSlice';
 import modalReducer from './modal/modalSlice';
+import profileReducer from './profile/profileSlice';
 import { persistReducer, persistStore } from 'redux-persist';
 // import thunk from 'redux-thunk';
 
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   userSlice: userReducer,
   activitySlice: activityReducer,
   modalSlice: modalReducer,
+  profileSlice: profileReducer,
 });
 
 const persistConfig = {

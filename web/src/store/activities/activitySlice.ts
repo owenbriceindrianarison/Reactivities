@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { Activity } from './model/activity';
 import { User } from '../user/model/user';
-import { Profile } from './model/profile';
+import { Profile } from '../profile/model/profile';
 
 export type StatusState = 'idle' | 'loading' | 'failed';
 export interface ActivityState {
