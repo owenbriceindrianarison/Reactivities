@@ -31,7 +31,7 @@ export function PhotoUploadWidget({ setAddPhotoMode }: Props) {
       if (files && files.length > 0)
         files.forEach((file: any) => URL.revokeObjectURL(file.preview));
     };
-  }, []);
+  }, [files]);
 
   return (
     <Grid>

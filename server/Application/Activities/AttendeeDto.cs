@@ -1,5 +1,4 @@
-﻿using System;
-namespace Application.Activities
+﻿namespace Application.Activities
 {
 	public class AttendeeDto
 	{

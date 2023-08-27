@@ -23,7 +23,6 @@ namespace Application.Activities
 			{
 				_context = context;
 				_userAccessor = userAccessor;
-
             }
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)

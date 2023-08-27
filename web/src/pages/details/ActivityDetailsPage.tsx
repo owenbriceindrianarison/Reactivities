@@ -12,6 +12,7 @@ import { ActivityDetailedSidebar } from '../../components/activities/details/Act
 import { ActivityDetailedHeader } from '../../components/activities/details/ActivityDetailedHeader';
 import { ActivityDetailedInfo } from '../../components/activities/details/ActivityDetailedInfo';
 import { ActivityDetailedChat } from '../../components/activities/details/ActivityDetailedChat';
+import { cancelSelectedActivity } from '../../store/activities/activitySlice';
 
 export default function ActivityDetailPage() {
   const { id } = useParams();
@@ -22,6 +23,10 @@ export default function ActivityDetailPage() {
 
   useEffect(() => {
     dispatch(getActivityAsync(id!));
+
+    return () => {
+      dispatch(cancelSelectedActivity());
+    };
   }, [id, dispatch]);
 
   if (status === 'loading' || !activity) return <LoadingComponent />;
@@ -31,7 +36,7 @@ export default function ActivityDetailPage() {
       <Grid.Column width={10}>
         <ActivityDetailedHeader activity={activity} />
         <ActivityDetailedInfo activity={activity} />
-        <ActivityDetailedChat />
+        <ActivityDetailedChat activityId={activity.id} />
       </Grid.Column>
       <Grid.Column width={6}>
         <ActivityDetailedSidebar activity={activity} />

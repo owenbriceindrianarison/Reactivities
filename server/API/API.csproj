@@ -28,11 +28,13 @@
     <None Remove="Middleware\" />
     <None Remove="DTOs\" />
     <None Remove="Services\" />
+    <None Remove="SignalR\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Extensions\" />
     <Folder Include="Middleware\" />
     <Folder Include="DTOs\" />
     <Folder Include="Services\" />
+    <Folder Include="SignalR\" />
   </ItemGroup>
 </Project>

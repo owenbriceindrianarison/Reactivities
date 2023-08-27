@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { store } from '../store';
+// import { store } from '../store';
 import { Photo, Profile } from './model/profile';
 import { setImage } from '../user/userSlice';
 
@@ -36,8 +36,7 @@ export const profileSlice = createSlice({
     addPhoto: (state, action: PayloadAction<{ photo: Photo }>) => {
       const { photo } = action.payload;
       state.profile?.photos?.push(photo);
-      if (photo.isMain && store.getState().userSlice.user) {
-        store.dispatch(setImage({ imageUrl: photo.url }));
+      if (photo.isMain) {
         state.profile!.image = photo.url;
       }
     },

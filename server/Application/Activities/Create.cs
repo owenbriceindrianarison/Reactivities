@@ -32,7 +32,6 @@ namespace Application.Activities
 			{
 				_context = context;
 				_userAccessor = userAccessor;
-
             }
 
 			public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
@@ -47,7 +46,6 @@ namespace Application.Activities
 				};
 
 				request.Activity.Attendees.Add(attendee);
-
 
                 _context.Activities.Add(request.Activity);
 

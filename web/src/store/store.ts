@@ -11,6 +11,7 @@ import commonReducer from './common/commonSlice';
 import userReducer from './user/userSlice';
 import modalReducer from './modal/modalSlice';
 import profileReducer from './profile/profileSlice';
+import commentReducer from './comments/commentSlice';
 import { persistReducer, persistStore } from 'redux-persist';
 // import thunk from 'redux-thunk';
 
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   activitySlice: activityReducer,
   modalSlice: modalReducer,
   profileSlice: profileReducer,
+  commentSlice: commentReducer,
 });
 
 const persistConfig = {

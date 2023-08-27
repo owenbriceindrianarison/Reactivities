@@ -30,11 +30,17 @@ export const loadProfilesAsync =
 
 export const uploadPhotoAsync =
   (file: Blob): AppThunk<Promise<Photo | undefined>> =>
-  async (dispatch) => {
+  async (dispatch, getState) => {
     dispatch(setUploadLoadingToggle());
 
     const photo = await uploadPhotoRequest(file);
-    if (photo) dispatch(addPhoto({ photo }));
+    if (photo) {
+      dispatch(addPhoto({ photo }));
+
+      if (photo.isMain && getState().userSlice.user) {
+        dispatch(setImage({ imageUrl: photo.url }));
+      }
+    }
 
     dispatch(setUploadLoadingToggle());
 

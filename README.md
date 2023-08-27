@@ -82,9 +82,11 @@ Start the server
   - React Cropper
   - Main photo
   - Delete Photos
+- Realtime message :
+  - SignaR Transports
+  - SignalR Client package
 
 ### Feature to do
 
-- SignalR (real time)
 - Followers
 - Paging, Sorting, Filtering

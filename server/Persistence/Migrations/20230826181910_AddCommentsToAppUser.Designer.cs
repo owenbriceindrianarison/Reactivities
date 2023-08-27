@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
@@ -10,9 +11,11 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230826181910_AddCommentsToAppUser")]
+    partial class AddCommentsToAppUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.10");
@@ -153,9 +156,7 @@ namespace Persistence.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT")
-                        .HasDefaultValueSql("getdate()");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -342,7 +343,7 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Domain.AppUser", "Author")
-                        .WithMany()
+                        .WithMany("Comments")
                         .HasForeignKey("AuthorId");
 
                     b.Navigation("Activity");
@@ -418,6 +419,8 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.AppUser", b =>
                 {
                     b.Navigation("Activities");
+
+                    b.Navigation("Comments");
 
                     b.Navigation("Photos");
                 });

@@ -1,9 +1,6 @@
-﻿using System;
-using Application.Core;
+﻿using Application.Core;
 using Application.Interfaces;
-using Domain;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
